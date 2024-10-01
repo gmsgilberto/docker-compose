@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  postgredb:
+    build: 
+      context: ./postgredb
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: postgredb
+      POSTGRES_USER: USER-DES
+      POSTGRES_PASSWORD: PASS@01
+    ports:
+      - "5432:5432"
+    networks:
+      - localNet
+    volumes: 
+      - postgredb:/var/lib/postgresql
+          
+volumes:
+  postgredb:
+    driver: local   
+
+networks:
+  localNet:
+    driver: bridge
+  
