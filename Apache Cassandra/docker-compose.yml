@@ -1,0 +1,27 @@
+
+services:
+  cassandradb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9042-9045:9042"
+      - "7000-7003:7000"
+    environment:
+      - CASSANDRA_USER=admin
+      - CASSANDRA_PASSWORD=admin
+      - CASSANDRA_START_RPC=true
+      - CASSANDRA_RPC_ADDRESS=0.0.0.0
+      - CASSANDRA_LISTEN_ADDRESS=auto
+      - CASSANDRA_CLUSTER_NAME=ifsdbcluster
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_DC=ifsdbcluster-datacenter
+    deploy:
+      mode: replicated
+      replicas: 3
+      endpoint_mode: vip
+    networks:
+      - localNet
+
+networks:
+  localNet:
